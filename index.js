@@ -7,12 +7,10 @@ import { Forms } from "@vendetta/ui/components";
 const { FormRow, FormSwitch, FormSection, FormInput } = Forms;
 const { View, Animated, TouchableOpacity, LayoutAnimation, UIManager, Platform } = ReactNative;
 
-// Увімкнути LayoutAnimation на Android
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-// Налаштування за замовчуванням
 storage.enabled ??= true;
 storage.messageFade ??= true;
 storage.buttonScale ??= true;
@@ -24,7 +22,6 @@ export default {
   onLoad: () => {
     if (!storage.enabled) return;
 
-    // === 1. Fade-in для повідомлень ===
     try {
       const Message = findByName("Message") || findByProps("MessageContent");
       if (Message) {
@@ -54,7 +51,6 @@ export default {
       console.log("[UIAnimations] Message patch failed:", e);
     }
 
-    // === 2. Scale анімація для кнопок (TouchableOpacity) ===
     try {
       if (storage.buttonScale) {
         const originalTouchable = TouchableOpacity;
@@ -99,7 +95,6 @@ export default {
       console.log("[UIAnimations] Button scale patch failed:", e);
     }
 
-    // === 3. LayoutAnimation для деяких переходів ===
     try {
       const Navigation = findByProps("navigate");
       if (Navigation) {
