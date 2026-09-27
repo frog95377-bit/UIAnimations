@@ -5,7 +5,7 @@ import { storage } from "@vendetta/plugin";
 import { Forms } from "@vendetta/ui/components";
 
 const { FormRow, FormSwitch, FormSection, FormInput } = Forms;
-const { View, Animated, TouchableOpacity, LayoutAnimation, UIManager, Platform } = ReactNative;
+const { Animated, TouchableOpacity, LayoutAnimation, UIManager, Platform } = ReactNative;
 
 if (Platform.OS === "android" && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -38,10 +38,10 @@ export default {
               useNativeDriver: true,
             }).start();
 
-            return (
-              <Animated.View style={{ opacity }}>
-                {ret}
-              </Animated.View>
+            return React.createElement(
+              Animated.View,
+              { style: { opacity } },
+              ret
             );
           })
         );
@@ -89,10 +89,10 @@ export default {
               originalOnPressOut?.(...a);
             };
 
-            return (
-              <Animated.View style={{ transform: [{ scale }] }}>
-                {ret}
-              </Animated.View>
+            return React.createElement(
+              Animated.View,
+              { style: { transform: [{ scale }] } },
+              ret
             );
           })
         );
@@ -136,65 +136,66 @@ export default {
     const [buttonScale, setButtonScale] = React.useState(storage.buttonScale);
     const [duration, setDuration] = React.useState(String(storage.duration ?? 250));
 
-    return (
-      <>
-        <FormSection title="Загальні">
-          <FormRow
-            label="Увімкнути плагін"
-            trailing={
-              <FormSwitch
-                value={enabled}
-                onValueChange={(v) => {
-                  storage.enabled = v;
-                  setEnabled(v);
-                }}
-              />
-            }
-          />
-          <FormRow
-            label="Fade повідомлень"
-            subLabel="Плавна поява нових повідомлень"
-            trailing={
-              <FormSwitch
-                value={messageFade}
-                onValueChange={(v) => {
-                  storage.messageFade = v;
-                  setMessageFade(v);
-                }}
-              />
-            }
-          />
-          <FormRow
-            label="Scale кнопок"
-            subLabel="Легке зменшення при натисканні"
-            trailing={
-              <FormSwitch
-                value={buttonScale}
-                onValueChange={(v) => {
-                  storage.buttonScale = v;
-                  setButtonScale(v);
-                }}
-              />
-            }
-          />
-        </FormSection>
-        <FormSection title="Швидкість">
-          <FormInput
-            title="Тривалість анімації (мс)"
-            value={duration}
-            keyboardType="numeric"
-            onChange={(v) => {
-              const num = parseInt(v, 10) || 250;
-              storage.duration = num;
-              setDuration(String(num));
-            }}
-          />
-        </FormSection>
-        <FormSection title="Примітка">
-          <FormRow label="Після зміни налаштувань перезавантаж Discord (або вимкни/увімкни плагін)" />
-        </FormSection>
-      </>
+    return React.createElement(
+      React.Fragment,
+      null,
+      React.createElement(
+        FormSection,
+        { title: "Загальні" },
+        React.createElement(FormRow, {
+          label: "Увімкнути плагін",
+          trailing: React.createElement(FormSwitch, {
+            value: enabled,
+            onValueChange: (v) => {
+              storage.enabled = v;
+              setEnabled(v);
+            },
+          }),
+        }),
+        React.createElement(FormRow, {
+          label: "Fade повідомлень",
+          subLabel: "Плавна поява нових повідомлень",
+          trailing: React.createElement(FormSwitch, {
+            value: messageFade,
+            onValueChange: (v) => {
+              storage.messageFade = v;
+              setMessageFade(v);
+            },
+          }),
+        }),
+        React.createElement(FormRow, {
+          label: "Scale кнопок",
+          subLabel: "Легке зменшення при натисканні",
+          trailing: React.createElement(FormSwitch, {
+            value: buttonScale,
+            onValueChange: (v) => {
+              storage.buttonScale = v;
+              setButtonScale(v);
+            },
+          }),
+        })
+      ),
+      React.createElement(
+        FormSection,
+        { title: "Швидкість" },
+        React.createElement(FormInput, {
+          title: "Тривалість анімації (мс)",
+          value: duration,
+          keyboardType: "numeric",
+          onChange: (v) => {
+            const num = parseInt(v, 10) || 250;
+            storage.duration = num;
+            setDuration(String(num));
+          },
+        })
+      ),
+      React.createElement(
+        FormSection,
+        { title: "Примітка" },
+        React.createElement(FormRow, {
+          label: "Після зміни налаштувань перезавантаж Discord (або вимкни/увімкни плагін)",
+        })
+      )
     );
   },
 };
-      
