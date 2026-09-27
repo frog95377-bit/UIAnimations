@@ -1,9 +1,9 @@
 {
   "name": "UIAnimations",
-  "description": "Додає плавні анімації інтерфейсу Discord (fade повідомлень, scale кнопок тощо)",
+  "description": "Додає плавні анімації інтерфейсу: fade повідомлень, scale кнопок, плавні переходи",
   "authors": [
     {
-      "name": "Grok",
+      "name": "frog95377-bit",
       "id": "0"
     }
   ],
@@ -11,5 +11,5 @@
   "vendetta": {
     "icon": "ic_theme_24px"
   },
-  "version": "1.0.0"
+  "version": "1.0.1"
 }
